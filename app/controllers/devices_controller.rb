@@ -28,8 +28,6 @@ class DevicesController < ApplicationController
   # POST /devices
   # POST /devices.json
   def create
-    # puts params.inspect
-       
     device_params = {
       :hostname         => params[:hostname], #"t1-temp123",
       :plan             => params[:plan],
@@ -37,14 +35,6 @@ class DevicesController < ApplicationController
       :operating_system => params[:operating_system], #'Container Linux - Stable',
       :billing_cycle    => "hourly"
     }
-
-    # puts "============================="
-    # puts device_params.to_json
-    # puts "============================="
-    # @project = Packet.list_projects.first
-    # params[:project_id] = @project.id
-    # @device = Packet::Device.new(params)
-    
     device =  @@packet_api.create_device(device_params)
 
     respond_to do |format|
