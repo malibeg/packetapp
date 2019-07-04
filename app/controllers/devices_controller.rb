@@ -52,7 +52,7 @@ class DevicesController < ApplicationController
         format.html { redirect_to devices_url, notice: 'Device was successfully created.' }
         format.json { render :show, status: :created, location: _device }
       else
-        format.html { render :new }
+        format.html { redirect_to devices_url, notice:  'Error creating device. Error: ' + device[:error].message   }
         format.json { render json: {error: device.error}, status: :unprocessable_entity }
       end
     end
