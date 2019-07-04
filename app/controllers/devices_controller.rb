@@ -2,9 +2,10 @@ class DevicesController < ApplicationController
     before_action :set_device, only: [:show, :edit, :update, :destroy]
     skip_before_action :verify_authenticity_token, raise: false
 
+  @@project_id = "ca73364c-6023-4935-9137-2132e73c20b4"
+
   def index
-    @project = Packet.list_projects.first
-    @devices = Packet.list_devices(@project.id) # TODO
+    @devices = Packet.list_devices(@@project_id)
   end
 
   # GET /devices/1
@@ -25,9 +26,7 @@ class DevicesController < ApplicationController
   # POST /devices.json
   def create
     # puts params.inspect
-
-    @project = Packet.list_projects.first
-        
+       
     device_params = {
       :hostname         => params[:hostname], #"t1-temp123",
       :plan             => params[:plan],
@@ -41,7 +40,7 @@ class DevicesController < ApplicationController
     # puts "============================="
 
     token = ENV['PACKET_TOKEN']
-    url = "https://api.packet.net/projects/" + @project.id + "/devices"
+    url = "https://api.packet.net/projects/" + @@project_id + "/devices"
     #puts " creating device... URL = " + url
     resp = RestClient.post(url, 
       device_params.to_json,
@@ -54,9 +53,7 @@ class DevicesController < ApplicationController
     # @project = Packet.list_projects.first
     # params[:project_id] = @project.id
     # @device = Packet::Device.new(params)
-    puts resp.body
-    puts resp.code
-
+    #puts resp.body
     _device =  JSON.parse(resp.body)
 
     respond_to do |format|
