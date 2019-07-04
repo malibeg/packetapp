@@ -17,12 +17,12 @@
   <tbody>
     <% @devices.each do |device| %>
       <tr>
-        <td><%= device.hostname %></td>
-        <td><%= device.state %></td>
-        <td><%= device.operating_system.slug %></td>
-        <td><%= device.facility.code %></td>
-        <td> <%= link_to 'Device', device_path(device.id)%> </td>
-        <td><%= link_to 'Destroy', device_path(device.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>        
+        <td><%= device['hostname'] %></td>
+        <td><%= device['state'] %></td>
+        <td><%= device['operating_system']['slug'] %></td>
+        <td><%= device['facility']['code'] %></td>
+        <td> <%= link_to 'Device', device_path(device['id'])%> </td>
+        <td><%= link_to 'Destroy', device_path(device['id']), method: :delete, data: { confirm: 'Are you sure?' } %></td>        
       </tr>
     <% end %>
   </tbody>

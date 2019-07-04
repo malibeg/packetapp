@@ -3,9 +3,10 @@ class DevicesController < ApplicationController
     skip_before_action :verify_authenticity_token, raise: false
 
   @@project_id = "ca73364c-6023-4935-9137-2132e73c20b4"
+  @@packet_api = PacketApi.new(@@project_id)
 
   def index
-    @devices = Packet.list_devices(@@project_id)
+    @devices = @@packet_api.list_devices #Packet.list_devices(@@project_id)
   end
 
   # GET /devices/1
@@ -15,7 +16,7 @@ class DevicesController < ApplicationController
 
   # GET /devices/new
   def new
-    @device = Packet::Device.new
+    @device = {} #Packet::Device.new
   end
 
   # GET /devices/1/edit
@@ -38,31 +39,19 @@ class DevicesController < ApplicationController
     # puts "============================="
     # puts device_params.to_json
     # puts "============================="
-
-    token = ENV['PACKET_TOKEN']
-    url = "https://api.packet.net/projects/" + @@project_id + "/devices"
-    #puts " creating device... URL = " + url
-    resp = RestClient.post(url, 
-      device_params.to_json,
-      {
-          :'X-Auth-Token' => token,
-          :content_type => :json,
-          :accept => :json
-      })
-    puts "============ ================"
     # @project = Packet.list_projects.first
     # params[:project_id] = @project.id
     # @device = Packet::Device.new(params)
-    #puts resp.body
-    _device =  JSON.parse(resp.body)
+    
+    device =  @@packet_api.create_device(device_params)
 
     respond_to do |format|
-      if resp.code < 300
+      if !device[:error]
         format.html { redirect_to devices_url, notice: 'Device was successfully created.' }
         format.json { render :show, status: :created, location: _device }
       else
         format.html { render :new }
-        format.json { render json: {error: "Error creating device"}, status: :unprocessable_entity }
+        format.json { render json: {error: device.error}, status: :unprocessable_entity }
       end
     end
   end
@@ -84,7 +73,7 @@ class DevicesController < ApplicationController
   # DELETE /devices/1
   # DELETE /devices/1.json
   def destroy
-    Packet.delete_device(@device)
+    @@packet_api.delete_device @device['id'] #Packet.delete_device(@device)
     respond_to do |format|
       format.html { redirect_to devices_url, notice: 'Device was successfully destroyed.' }
       format.json { head :no_content }
@@ -94,7 +83,7 @@ class DevicesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_device
-      @device = Packet.get_device(params[:id])
+      @device = @@packet_api.get_device(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
