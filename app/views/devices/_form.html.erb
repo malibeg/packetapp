@@ -1,0 +1,21 @@
+<%= form_tag edit_device_path do %>
+  <div class="field">
+      <%= label_tag :hostname %>
+      <%= text_field_tag :hostname %>
+  </div>
+  <div class="field">
+      <%= label_tag :operating_system %>
+      <%= text_field_tag :operating_system %>
+  </div>
+  <div class="field">
+      <%= label_tag :plan %>
+      <%= text_field_tag :plan %>
+  </div>
+  <div class="field">
+      <%= label_tag :facility %>
+      <%= text_field_tag :facility %>
+  </div>
+  <div class="actions">
+   <%= submit_tag 'Save' %>
+  </div>
+<% end %>

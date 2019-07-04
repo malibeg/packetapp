@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Devices</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Hostname</th>
+      <th> state</th>
+      <th> OS slug</th>
+      <th>Facility code </th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @devices.each do |device| %>
+      <tr>
+        <td><%= device.hostname %></td>
+        <td><%= device.state %></td>
+        <td><%= device.operating_system.slug %></td>
+        <td><%= device.facility.code %></td>
+        <td> <%= link_to 'Device', device_path(device.id)%> </td>
+        <td><%= link_to 'Destroy', device_path(device.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<%= link_to 'New Device', :controller => :devices, :action => :new %>
+
+
