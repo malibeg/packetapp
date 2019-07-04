@@ -55,7 +55,7 @@ class PacketApi
 
     def list_facilities 
         begin            
-            url = "https://api.packet.net/facilities"
+            url = "https://api.packet.net/projects/" + @project_id + "/facilities"
             resp = RestClient.get(url, @headers)
             facilities = JSON.parse(resp.body)["facilities"]
         rescue => error
