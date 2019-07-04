@@ -29,7 +29,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'packethost', git: 'https://github.com/malibeg/packet-rb.git' #path: '../packet-rb'
 
 
-gem 'rest-client', '~> 1.8'
+gem 'rest-client', '~> 2.0.2'
 
 
 # Use Redis adapter to run Action Cable in production
