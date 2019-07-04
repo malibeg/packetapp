@@ -54,11 +54,10 @@ class PacketApi
     end
 
     def list_facilities 
-        # /facilities
         begin            
             url = "https://api.packet.net/facilities"
             resp = RestClient.get(url, @headers)
-            facilities = JSON.parse(resp.body)
+            facilities = JSON.parse(resp.body)["facilities"]
         rescue => error
             puts error
             facilities = {:error => error}
@@ -69,7 +68,7 @@ class PacketApi
         begin            
             url = "https://api.packet.net/operating-systems"
             resp = RestClient.get(url, @headers)
-            oses =  JSON.parse(resp.body)
+            oses =  JSON.parse(resp.body)["operating_systems"]
         rescue => error
             puts error
             oses = {:error => error}

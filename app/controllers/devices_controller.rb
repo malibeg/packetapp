@@ -17,6 +17,8 @@ class DevicesController < ApplicationController
   # GET /devices/new
   def new
     @device = {} #Packet::Device.new
+    @oses = @@packet_api.list_oses.map { |obj| obj['slug'] }
+    @facilities = @@packet_api.list_facilities.map { |obj| obj['code'] }
   end
 
   # GET /devices/1/edit

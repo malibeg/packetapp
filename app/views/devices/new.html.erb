@@ -7,7 +7,7 @@
   </div>
   <div class="field">
       <%= label_tag :operating_system %>
-      <%= select_tag :operating_system, raw("<option>coreos_stable</option>") %>
+      <%= select_tag :operating_system, options_for_select(@oses) %>
   </div>
   <div class="field">
       <%= label_tag :plan %>
@@ -15,7 +15,7 @@
   </div>
   <div class="field">
       <%= label_tag :facility %>
-      <%= select_tag :facility, raw("<option>ewr1</option>") %>
+      <%= select_tag :facility, options_for_select(@facilities) %>
   </div>
   <%= csrf_meta_tags %>
   <div class="actions">
